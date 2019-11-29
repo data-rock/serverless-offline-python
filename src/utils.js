@@ -27,6 +27,7 @@ module.exports = {
     'python2.7',
     'python3.6',
     'python3.7',
+    'python3.8',
     'ruby2.5',
   ],
 };
