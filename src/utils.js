@@ -19,14 +19,14 @@ module.exports = {
   detectEncoding: request => _.includes(request.headers['content-type'], 'multipart/form-data') ? 'binary' : 'utf8',
   isProxyRuntime: runtime => { return runtime.startsWith('python') || runtime.startsWith('ruby') },
   supportedRuntimes: [
-    'nodejs',
-    'nodejs4.3',
-    'nodejs6.10',
     'nodejs8.10',
+    'nodejs10.x',
+    'nodejs12.x',
     'babel',
     'python2.7',
     'python3.6',
     'python3.7',
+    'python3.8',
     'ruby2.5',
   ],
 };
