@@ -11,7 +11,7 @@ module.exports = class ServerlessBuilder {
           name: 'aws',
           stage: 'dev',
           region: 'us-east-1',
-          runtime: 'nodejs4.3',
+          runtime: 'nodejs8.10',
         },
         functions: {},
         getFunction(functionName) {

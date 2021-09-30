@@ -6,8 +6,7 @@ const path = require('path');
 const exec = require('child_process').exec;
 
 // External dependencies
-const Hapi = require('hapi');
-const corsHeaders = require('hapi-cors-headers');
+const Hapi = require('@hapi/hapi');
 const _ = require('lodash');
 const crypto = require('crypto');
 
@@ -286,36 +285,34 @@ class Offline {
   }
 
   _createServer() {
-    // Hapijs server creation
-    this.server = new Hapi.Server({
-      connections: {
-        router: {
-          stripTrailingSlash: !this.options.preserveTrailingSlash, // removes trailing slashes on incoming paths.
-        },
-      },
-    });
-
-    this.server.register(require('h2o2'), err => err && this.serverlessLog(err));
-
-    const connectionOptions = {
+    const serverOptions = {
       host: this.options.host,
       port: this.options.port,
+      routes: {
+        cors: true,
+      },
+      router: {
+        stripTrailingSlash: !this.options.preserveTrailingSlash, // removes trailing slashes on incoming paths.
+      },
     };
-    const httpsDir = this.options.httpsProtocol;
 
     // HTTPS support
+    const httpsDir = this.options.httpsProtocol;
     if (typeof httpsDir === 'string' && httpsDir.length > 0) {
-      connectionOptions.tls = {
+      serverOptions.tls = {
         key: fs.readFileSync(path.resolve(httpsDir, 'key.pem'), 'ascii'),
         cert: fs.readFileSync(path.resolve(httpsDir, 'cert.pem'), 'ascii'),
       };
     }
 
-    // Passes the configuration object to the server
-    this.server.connection(connectionOptions);
-
-    // Enable CORS preflight response
-    this.server.ext('onPreResponse', corsHeaders);
+    // Hapijs server creation
+    this.server = new Hapi.Server(serverOptions);
+    let plugins = [
+      {
+        plugin: require('@hapi/h2o2')
+      },
+    ];
+    this.server.register(plugins);
   }
 
   _createRoutes() {

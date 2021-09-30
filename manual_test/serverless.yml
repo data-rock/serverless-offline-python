@@ -18,7 +18,7 @@ plugins:
 
 provider:
   name: aws
-  runtime: nodejs4.3
+  runtime: nodejs8.10
   # runtime: ruby2.5
   # runtime: python2.7
   apiKeys:
