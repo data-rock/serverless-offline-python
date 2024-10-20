@@ -115,7 +115,7 @@
     "lodash": "^4.17.4",
     "trim-newlines": "^2.0.0",
     "uuid": "^3.2.1",
-    "velocityjs": "^0.9.3"
+    "velocityjs": "^0.10.1"
   },
   "devDependencies": {
     "chai": "^3.5.0",
